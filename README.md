@@ -1,4 +1,4 @@
-# Users and their todolists
+# Organization Management System
 Spring Application based on **MVC architectural pattern**.
 
 ## Technologies :bulb:

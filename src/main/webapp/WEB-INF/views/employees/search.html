@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Поиск сотрудников отдела</title>
+    <link th:href="@{/styles/table.css}" rel="stylesheet"/>
+</head>
+<body>
+
+<table>
+    <tr>
+        <td><a th:href="@{/departments/{departmentId}/employees(departmentId=${departmentId})}">Назад к списку сотрудников отдела</a></td>
+    </tr>
+</table>
+
+<form th:method="POST" th:action="@{/departments/{departmentId}/employees/search(departmentId=${departmentId})}">
+    <label for="fullName">Поиск сотрудников отдела по их полному имени (или его части): </label>
+    <input type="text" id="fullName" name="fullName"/>
+    <br/>
+    <input type="submit" value="Искать"/>
+</form>
+
+<div th:if="${employees.isEmpty()}" style="text-align: center;">
+    <h3>Ничего не найдено</h3>
+</div>
+<div th:if="${!employees.isEmpty()}" style="text-align: center;">
+    <h3>Найденные сотрудники:</h3>
+</div>
+
+<table th:if="${!employees.isEmpty()}">
+    <tr>
+        <th>ID</th>
+        <th>Полное имя сотрудника</th>
+        <th>Операции над сотрудниками</th>
+    </tr>
+    <tr th:each="employee: ${employees}">
+        <td th:text="${employee.getId()}">Id</td>
+        <td th:text="${employee.getFullName()}">Title</td>
+        <td>
+            <div>
+                <form th:method="GET"
+                      th:action="@{/departments/{departmentId}/employees/{id}/edit(id=${employee.getId()}, departmentId=${departmentId})}">
+                    <input type="submit" value="Редактировать"/>
+                </form>
+
+                <form th:method="DELETE"
+                      th:action="@{/departments/{departmentId}/employees/{id}(id=${employee.getId()}, departmentId=${departmentId})}">
+                    <input type="submit" value="Удалить"/>
+                </form>
+            </div>
+        </td>
+    </tr>
+</table>
+<br>
+
+</body>
+</html>

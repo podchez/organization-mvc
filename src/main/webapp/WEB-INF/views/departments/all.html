@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Список отделов</title>
+    <link th:href="@{/styles/table.css}" rel="stylesheet"/>
+</head>
+<body>
+
+<div>
+    <table>
+        <tr>
+            <td><a th:href="@{/departments/new}">Добавить новый отдел</a></td>
+        </tr>
+    </table>
+    <div th:if="${departments.isEmpty()}" style="text-align: center;">
+        <h3>Список отделов пуст</h3>
+    </div>
+    <div th:if="${!departments.isEmpty()}" style="text-align: center;">
+        <h3>Список отделов:</h3>
+    </div>
+    <table th:if="${!departments.isEmpty()}">
+        <tr>
+            <th>ID</th>
+            <th>Название отдела</th>
+            <th>Сотрудники отдела</th>
+            <th>Операции над отделом</th>
+        </tr>
+        <tr th:each="department: ${departments}">
+            <td th:text="${department.getId()}">Id</td>
+            <td th:text="${department.getName()}">Username</td>
+            <td><a th:href="@{/departments/{id}/employees(id=${department.getId()})}">Перейти к списку сотрудников</a></td>
+            <td>
+                <div>
+                    <form th:method="GET" th:action="@{/departments/{id}/edit(id=${department.getId()})}">
+                        <input type="submit" value="Редактировать">
+                    </form>
+                    <form th:method="DELETE" th:action="@{/departments/{id}(id=${department.getId()})}">
+                        <input type="submit" value="Удалить">
+                    </form>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <br>
+</div>
+
+</body>
+</html>

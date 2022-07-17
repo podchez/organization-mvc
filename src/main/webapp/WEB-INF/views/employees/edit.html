@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование сотрудника отдела</title>
+    <link th:href="@{/styles/table.css}" rel="stylesheet"/>
+</head>
+<body>
+
+<table>
+    <tr>
+        <td><a th:href="@{/departments/{departmentId}/employees(departmentId=${departmentId})}">Назад к списку сотрудников отдела</a></td>
+    </tr>
+</table>
+
+<form th:method="PUT" th:action="@{/departments/{departmentId}/employees/{id}(id=${employee.getId()}, departmentId=${departmentId})}" th:object="${employee}">
+    <label for="fullName">Введите полное имя сотрудника: </label>
+    <input type="text" th:field="*{fullName}" id="fullName"/>
+    <div style="color:red" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}">fullName error</div>
+    <br/>
+    <input type="submit" value="Сохранить изменения"/>
+</form>
+
+</body>
+</html>
